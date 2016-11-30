@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Search</title>
+
+<style>
+body {
+	font-size: 10pt;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	word-break: break-all;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+table,td,th {
+	border: 2px solid white;
+}
+
+th,td {
+	padding: 2px;
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+}
+
+td {
+	text-align: left;
+}
+
+
+
+td.orange {
+	background-color: orange;
+}
+
+td.default {
+}
+
+#search_button {
+    width: 100%;  height: 50px;
+}
+</style>
+
+</head>
+<body>
+	{% load custom_filter %}
+
+	<form id=search_form method=post action="/search" >
+	{% csrf_token %}
+		<div style="width:35%; float: left; padding:5px;">
+			<label><b>■ 검색 입력 정보</b></label><br/>
+			<label> (필수) 특허번호 또는 문장</label><br/>
+			<textarea name=search_data rows=6  style="width:100%"></textarea>
+			<label> (선택) 발명의 명칭</label><br/>
+			<textarea name=search_title rows=3  style="width:100%"></textarea>
+		</div>
+		<div style="width:15%; float: left; padding:5px;">
+			<label><b>■ 확인용 입력 정보</b></label><br/>
+			<label> (선택) 참증번호</label><br/>
+			<textarea name=reference rows=6 style="width:100%"></textarea><br/></br/>
+			<input id=search_button type=submit value="검색">
+		</div>
+	</form> 
+
+
+	<table>
+		<tr>
+			<th width=20%><p>특허번호</p></th>
+			<th width=60%><p>제목</p></th>
+			<th width=20%><p>유사도</p></th>
+		</tr>
+
+		{% if search_results %}
+		<ul>
+			{% for doc in search_results %}
+			<tr>
+				<td class={% if doc|get_value:"id"|isin:reference %}
+								orange
+						  {% else %}
+						  		default
+						  {% endif %}>
+					<p align=center>{{ doc|get_value:"id" }}</p></td>
+				<td><p>{{ doc|get_value:"tl" }}</p></td>
+				<td><p align=center>{{ doc|get_value:"score" }}</p></td>
+			</tr>
+			{% endfor %}
+		</ul>
+		{% else %}
+
+		{% endif %}
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Search Report</title>
+
+<style>
+body {
+	font-size: 10pt;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	word-break: break-all;
+}
+
+table,td,th {
+	border: 1px solid black;
+}
+
+th,td {
+	padding: 10px;
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+	height: 50px;
+}
+
+td {
+	text-align: left;
+}
+</style>
+
+</head>
+<body>
+	{% load custom_filter %}
+	 
+	{% comment %} 
+	num_report:	<strong>{{ num_report }}</strong> 
+	current_page: <strong>{{ current_page }}</strong> 
+	report_list: <strong>{{ report_list|length }}</strong> 
+	{% endcomment %}
+
+
+	<table style="border-collapse: collapse; border: 0;">
+		<tr>
+			<td style="border: 0"><p align=left>총 테스트 건수: {{ num_report }}</td>
+			<td style="border: 0"><p align=right>페이지:{{ current_page }}</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<th width=15%><p>특허번호</p></th>
+			<th width=35%><p>제목</p></th>
+			<th width=15%><p>참증</p></th>
+			<th width=35%><p>본원요약</p></th>
+		</tr>
+
+		{% if report_list %}
+		<ul>
+			{% for report in report_list %}
+			<tr>
+				<td><p align=center>{{ report.id_kipi }}</p></td>
+				<td><p>{{ report.title }}</p></td>
+				<td><p>{{ report.reference|convert_spliter:","|linebreaks }}</p></td>
+				<td><p>{{ report.summary }}</p></td>
+			</tr>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p>No Data.</p>
+		{% endif %}
+	</table>
+
+	<table style="border-collapse: collapse; border: 0;">
+		<tr>
+			<td style="border: 0">
+			{% for page in total_page_list %}
+			<a href="/report?current_page={{page}}"> 
+			[ 
+				{% ifequal page current_page %} <b> 
+				{% endifequal %} 
+				
+				{{page}}
+				 
+				{% ifequal page current_page %} </b>
+				{% endifequal %} 
+			] 
+			{% endfor %}
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

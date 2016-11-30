@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//src/search/migrations/0001_initial.py=utf-8
+encoding//src/search/migrations/0002_auto_20161124_1806.py=utf-8
+encoding//src/search/models.py=utf-8
+encoding//src/search/paging_helper.py=utf-8
+encoding//src/search/solr_request.py=utf-8
+encoding//src/search/templatetags/custom_filter.py=utf-8
+encoding//src/search/views.py=utf-8
