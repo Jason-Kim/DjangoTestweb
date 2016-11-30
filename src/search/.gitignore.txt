@@ -1,1 +1,0 @@
-solr_request.py
