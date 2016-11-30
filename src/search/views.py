@@ -70,6 +70,9 @@ def search(request):
         return render(request, 'search.html', {'search_results':[]})
 
 def get_cleaned_data(cleaned_data, name, defval=None):
+    '''
+    use this function after form.is_valid()
+    '''
     if cleaned_data.get(name) != None:
         return cleaned_data.get(name)
     else:
