@@ -11,7 +11,8 @@ register = template.Library()
 
 @register.filter(name='convert_spliter')
 def convert_spliter(value, spliter):
-    return '\n'.join(value.split(spliter))
+    #return '\n'.join(value.split(spliter))
+    return '\n'.join(list(set(value.split(spliter))))   # add to remove duplicate 
 
 @register.filter(name='get_value')
 def get_value(dic, key):
