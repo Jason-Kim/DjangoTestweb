@@ -36,8 +36,6 @@ td {
 	text-align: left;
 }
 
-
-
 td.orange {
 	background-color: orange;
 }
@@ -48,13 +46,36 @@ td.default {
 #search_button {
     width: 100%;  height: 50px;
 }
+
 </style>
+
+<script language=javascript>
+
+function isnull(val)
+{ 
+	return (val == null || val.trim().length < 1) ? true : false
+}
+
+function valid_check()
+{
+	var form = document.search_form;
+	if(isnull(form.search_data.value)) {
+		alert("특허번호 또는 문장을 입력해 주세요!");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</script>
+
+
 
 </head>
 <body>
 	{% load custom_filter %}
 
-	<form id=search_form method=post action="/search" >
+	<form id=search_form name=search_form method=post action="/search" onsubmit="return valid_check();">
 	{% csrf_token %}
 		<div style="width:35%; float: left; padding:5px;">
 			<label><b>■ 검색 입력 정보</b></label><br/>
