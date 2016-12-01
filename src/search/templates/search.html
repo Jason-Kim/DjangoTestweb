@@ -95,15 +95,17 @@ function valid_check()
 
 	<table>
 		<tr>
+			<th width=10%><p>순위</p></th>
 			<th width=20%><p>특허번호</p></th>
 			<th width=60%><p>제목</p></th>
-			<th width=20%><p>유사도</p></th>
+			<th width=10%><p>유사도</p></th>
 		</tr>
 
 		{% if search_results %}
 		<ul>
 			{% for doc in search_results %}
 			<tr>
+				<td><p align=center>{{ forloop.counter }}</p></td>
 				<td class={% if doc|get_value:"id"|isin:reference %}
 								orange
 						  {% else %}
